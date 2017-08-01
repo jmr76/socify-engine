@@ -1,0 +1,1 @@
+PublicActivity.config.table_name = 'socify_activities'

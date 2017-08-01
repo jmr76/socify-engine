@@ -1,0 +1,1 @@
+Rails.application.config.assets.precompile += %w( socify/*.gif socify/*.png socify/*.jpg )

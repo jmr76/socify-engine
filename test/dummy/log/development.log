@@ -1,0 +1,278 @@
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (9.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS `socify_engine_test`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS `socify_engine_dev`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (14.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS `socify_engine_test`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (28.7ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY) ENGINE=InnoDB[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT DATABASE() as db[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK(6513307308800014170, 0)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to DeviseCreateSocifyUsers (20150701024445)
+  [1m[35m (17.2ms)[0m  [1m[35mCREATE TABLE `socify_users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255) DEFAULT '' NOT NULL, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `about` varchar(255), `avatar` varchar(255), `cover` varchar(255), `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `confirmation_token` varchar(255), `confirmed_at` datetime, `confirmation_sent_at` datetime, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (17.6ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_email`  ON `socify_users` (`email`) [0m
+  [1m[35m (28.6ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_reset_password_token`  ON `socify_users` (`reset_password_token`) [0m
+  [1m[35m (26.8ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_confirmation_token`  ON `socify_users` (`confirmation_token`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150701024445')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyPosts (20150702015915)
+  [1m[35m (28.3ms)[0m  [1m[35mCREATE TABLE `socify_posts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `content` text NOT NULL, `socify_user_id` bigint, `attachment` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_posts_on_socify_user_id`  (`socify_user_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150702015915')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyActivities (20150702020527)
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE `socify_activities` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `trackable_type` varchar(255), `trackable_id` bigint, `owner_type` varchar(255), `owner_id` bigint, `key` varchar(255), `parameters` text, `recipient_type` varchar(255), `recipient_id` bigint, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_activities_on_trackable_type_and_trackable_id`  (`trackable_type`, `trackable_id`),  INDEX `index_socify_activities_on_owner_type_and_owner_id`  (`owner_type`, `owner_id`),  INDEX `index_socify_activities_on_recipient_type_and_recipient_id`  (`recipient_type`, `recipient_id`)) ENGINE=InnoDB[0m
+  [1m[35m (14.1ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_trackable_id_and_trackable_type`  ON `socify_activities` (`trackable_id`, `trackable_type`) [0m
+  [1m[35m (46.6ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_owner_id_and_owner_type`  ON `socify_activities` (`owner_id`, `owner_type`) [0m
+  [1m[35m (49.8ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_recipient_id_and_recipient_type`  ON `socify_activities` (`recipient_id`, `recipient_type`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150702020527')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ActsAsVotableSocifyMigration (20150703041854)
+  [1m[35m (37.6ms)[0m  [1m[35mCREATE TABLE `socify_votes` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `votable_type` varchar(255), `votable_id` bigint, `voter_type` varchar(255), `voter_id` bigint, `vote_flag` tinyint(1), `vote_scope` varchar(255), `vote_weight` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_votes_on_votable_type_and_votable_id`  (`votable_type`, `votable_id`),  INDEX `index_socify_votes_on_voter_type_and_voter_id`  (`voter_type`, `voter_id`)) ENGINE=InnoDB[0m
+  [1m[35m (28.5ms)[0m  [1m[35mCREATE  INDEX `index_socify_votes_on_voter_id_and_voter_type_and_vote_scope`  ON `socify_votes` (`voter_id`, `voter_type`, `vote_scope`) [0m
+  [1m[35m (52.5ms)[0m  [1m[35mCREATE  INDEX `index_socify_votes_on_votable_id_and_votable_type_and_vote_scope`  ON `socify_votes` (`votable_id`, `votable_type`, `vote_scope`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703041854')[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCachedVotesToSocifyPosts (20150703053202)
+  [1m[35m (25.6ms)[0m  [1m[35mALTER TABLE `socify_posts` ADD `cached_votes_up` int DEFAULT 0[0m
+  [1m[35m (32.4ms)[0m  [1m[35mCREATE  INDEX `index_socify_posts_on_cached_votes_up`  ON `socify_posts` (`cached_votes_up`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703053202')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyComments (20150703054721)
+  [1m[35m (30.5ms)[0m  [1m[35mCREATE TABLE `socify_comments` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(50) DEFAULT '', `comment` text, `commentable_type` varchar(255), `commentable_id` bigint, `socify_user_id` bigint, `role` varchar(255) DEFAULT 'comments', `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_comments_on_commentable_type_and_commentable_id`  (`commentable_type`, `commentable_id`),  INDEX `index_socify_comments_on_socify_user_id`  (`socify_user_id`)) ENGINE=InnoDB[0m
+  [1m[35m (37.1ms)[0m  [1m[35mCREATE  INDEX `index_socify_comments_on_commentable_type`  ON `socify_comments` (`commentable_type`) [0m
+  [1m[35m (33.6ms)[0m  [1m[35mCREATE  INDEX `index_socify_comments_on_commentable_id`  ON `socify_comments` (`commentable_id`) [0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK(6513307308800014170)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (12.6ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY) ENGINE=InnoDB[0m
+  [1m[35m (16.8ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT DATABASE() as db[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK(6513307308800014170, 0)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to DeviseCreateSocifyUsers (20150701024445)
+  [1m[35m (21.8ms)[0m  [1m[35mCREATE TABLE `socify_users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255) DEFAULT '' NOT NULL, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `about` varchar(255), `avatar` varchar(255), `cover` varchar(255), `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `confirmation_token` varchar(255), `confirmed_at` datetime, `confirmation_sent_at` datetime, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (17.0ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_email`  ON `socify_users` (`email`) [0m
+  [1m[35m (24.6ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_reset_password_token`  ON `socify_users` (`reset_password_token`) [0m
+  [1m[35m (34.3ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_confirmation_token`  ON `socify_users` (`confirmation_token`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150701024445')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyPosts (20150702015915)
+  [1m[35m (19.9ms)[0m  [1m[35mCREATE TABLE `socify_posts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `content` text NOT NULL, `socify_user_id` bigint, `attachment` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_posts_on_socify_user_id`  (`socify_user_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150702015915')[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyActivities (20150702020527)
+  [1m[35m (18.6ms)[0m  [1m[35mCREATE TABLE `socify_activities` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `trackable_type` varchar(255), `trackable_id` bigint, `owner_type` varchar(255), `owner_id` bigint, `key` varchar(255), `parameters` text, `recipient_type` varchar(255), `recipient_id` bigint, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_activities_on_trackable_type_and_trackable_id`  (`trackable_type`, `trackable_id`),  INDEX `index_socify_activities_on_owner_type_and_owner_id`  (`owner_type`, `owner_id`),  INDEX `index_socify_activities_on_recipient_type_and_recipient_id`  (`recipient_type`, `recipient_id`)) ENGINE=InnoDB[0m
+  [1m[35m (14.0ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_trackable_id_and_trackable_type`  ON `socify_activities` (`trackable_id`, `trackable_type`) [0m
+  [1m[35m (26.3ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_owner_id_and_owner_type`  ON `socify_activities` (`owner_id`, `owner_type`) [0m
+  [1m[35m (23.6ms)[0m  [1m[35mCREATE  INDEX `index_socify_activities_on_recipient_id_and_recipient_type`  ON `socify_activities` (`recipient_id`, `recipient_type`) [0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150702020527')[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ActsAsVotableSocifyMigration (20150703041854)
+  [1m[35m (20.1ms)[0m  [1m[35mCREATE TABLE `socify_votes` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `votable_type` varchar(255), `votable_id` bigint, `voter_type` varchar(255), `voter_id` bigint, `vote_flag` tinyint(1), `vote_scope` varchar(255), `vote_weight` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_votes_on_votable_type_and_votable_id`  (`votable_type`, `votable_id`),  INDEX `index_socify_votes_on_voter_type_and_voter_id`  (`voter_type`, `voter_id`)) ENGINE=InnoDB[0m
+  [1m[35m (14.5ms)[0m  [1m[35mCREATE  INDEX `index_socify_votes_on_voter_id_and_voter_type_and_vote_scope`  ON `socify_votes` (`voter_id`, `voter_type`, `vote_scope`) [0m
+  [1m[35m (22.2ms)[0m  [1m[35mCREATE  INDEX `index_socify_votes_on_votable_id_and_votable_type_and_vote_scope`  ON `socify_votes` (`votable_id`, `votable_type`, `vote_scope`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703041854')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCachedVotesToSocifyPosts (20150703053202)
+  [1m[35m (19.1ms)[0m  [1m[35mALTER TABLE `socify_posts` ADD `cached_votes_up` int DEFAULT 0[0m
+  [1m[35m (16.1ms)[0m  [1m[35mCREATE  INDEX `index_socify_posts_on_cached_votes_up`  ON `socify_posts` (`cached_votes_up`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703053202')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyComments (20150703054721)
+  [1m[35m (18.2ms)[0m  [1m[35mCREATE TABLE `socify_comments` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(50) DEFAULT '', `comment` text, `commentable_type` varchar(255), `commentable_id` bigint, `socify_user_id` bigint, `role` varchar(255) DEFAULT 'comments', `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_comments_on_commentable_type_and_commentable_id`  (`commentable_type`, `commentable_id`),  INDEX `index_socify_comments_on_socify_user_id`  (`socify_user_id`)) ENGINE=InnoDB[0m
+  [1m[35m (16.4ms)[0m  [1m[35mCREATE  INDEX `index_socify_comments_on_commentable_type`  ON `socify_comments` (`commentable_type`) [0m
+  [1m[35m (25.9ms)[0m  [1m[35mCREATE  INDEX `index_socify_comments_on_commentable_id`  ON `socify_comments` (`commentable_id`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703054721')[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCounterCacheToSocifyPosts (20150703161656)
+  [1m[35m (24.0ms)[0m  [1m[35mALTER TABLE `socify_posts` ADD `comments_count` int DEFAULT 0[0m
+  [1m[35m (32.6ms)[0m  [1m[35mCREATE  INDEX `index_socify_posts_on_comments_count`  ON `socify_posts` (`comments_count`) [0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703161656')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ActsAsFollowerSocifyMigration (20150703194107)
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS `socify_follows`[0m
+  [1m[35m (21.3ms)[0m  [1m[35mCREATE TABLE `socify_follows` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `followable_type` varchar(255) NOT NULL, `followable_id` bigint NOT NULL, `follower_type` varchar(255) NOT NULL, `follower_id` bigint NOT NULL, `blocked` tinyint(1) DEFAULT 0 NOT NULL, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_follows_on_followable_type_and_followable_id`  (`followable_type`, `followable_id`),  INDEX `index_socify_follows_on_follower_type_and_follower_id`  (`follower_type`, `follower_id`)) ENGINE=InnoDB[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE  INDEX `fk_follows`  ON `socify_follows` (`follower_id`, `follower_type`) [0m
+  [1m[35m (47.2ms)[0m  [1m[35mCREATE  INDEX `fk_followables`  ON `socify_follows` (`followable_id`, `followable_type`) [0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150703194107')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyEvents (20150709034258)
+  [1m[35m (35.8ms)[0m  [1m[35mCREATE TABLE `socify_events` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `when` datetime, `user_id` bigint, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_socify_events_on_user_id`  (`user_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150709034258')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddVotesCommentsCountToSocifyEvents (20150709050651)
+  [1m[35m (16.4ms)[0m  [1m[35mALTER TABLE `socify_events` ADD `cached_votes_up` int DEFAULT 0[0m
+  [1m[35m (25.4ms)[0m  [1m[35mCREATE  INDEX `index_socify_events_on_cached_votes_up`  ON `socify_events` (`cached_votes_up`) [0m
+  [1m[35m (30.8ms)[0m  [1m[35mALTER TABLE `socify_events` ADD `comments_count` int DEFAULT 0[0m
+  [1m[35m (26.2ms)[0m  [1m[35mCREATE  INDEX `index_socify_events_on_comments_count`  ON `socify_events` (`comments_count`) [0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150709050651')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFieldsToSocifyUser (20150710004012)
+  [1m[35m (28.8ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `sex` varchar(255) DEFAULT 'male' NOT NULL[0m
+  [1m[35m (20.4ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `location` varchar(255)[0m
+  [1m[35m (17.4ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `dob` date[0m
+  [1m[35m (19.7ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `phone_number` varchar(255)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150710004012')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPostsCountToSocifyUsers (20150710030803)
+  [1m[35m (25.3ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `posts_count` int DEFAULT 0 NOT NULL[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150710030803')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyFriendlyIdSlugs (20150710044606)
+  [1m[35m (15.6ms)[0m  [1m[35mCREATE TABLE `socify_friendly_id_slugs` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `slug` varchar(255) NOT NULL, `sluggable_id` int NOT NULL, `sluggable_type` varchar(50), `scope` varchar(255), `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (13.4ms)[0m  [1m[35mCREATE  INDEX `index_socify_friendly_id_slugs_on_sluggable_id`  ON `socify_friendly_id_slugs` (`sluggable_id`) [0m
+  [1m[35m (38.7ms)[0m  [1m[35mCREATE  INDEX `index_socify_friendly_id_slugs_on_slug_and_sluggable_type`  ON `socify_friendly_id_slugs` (`slug`, `sluggable_type`) [0m
+  [1m[35m (26.5ms)[0m  [1m[35mCREATE  INDEX `index_socify_friendly_id_slugs_on_sluggable_type`  ON `socify_friendly_id_slugs` (`sluggable_type`) [0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150710044606')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSlugToSocifyUsers (20150710044624)
+  [1m[35m (21.3ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `slug` varchar(255)[0m
+  [1m[35m (25.9ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_socify_users_on_slug`  ON `socify_users` (`slug`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150710044624')[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddContentHtmlToSocifyPosts (20150723052523)
+  [1m[35m (29.9ms)[0m  [1m[35mALTER TABLE `socify_posts` ADD `content_html` text[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150723052523')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCommentHtmlToSocifyComments (20150723052743)
+  [1m[35m (9.5ms)[0m  [1m[35mALTER TABLE `socify_comments` ADD `comment_html` text[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20150723052743')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RenameSocifyEventsWhenColumn (20170428044229)
+  [1m[35m (20.7ms)[0m  [1m[35mALTER TABLE `socify_events` CHANGE `when` `event_datetime` datetime DEFAULT NULL[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170428044229')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddMeritFieldsToSocifyUsers (20170613183107)
+  [1m[35m (16.4ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `sash_id` int[0m
+  [1m[35m (23.9ms)[0m  [1m[35mALTER TABLE `socify_users` ADD `level` int DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183107')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyMeritActions (20170613183243)
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE `socify_merit_actions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` int, `action_method` varchar(255), `action_value` int, `had_errors` tinyint(1) DEFAULT 0, `target_model` varchar(255), `target_id` int, `target_data` text, `processed` tinyint(1) DEFAULT 0, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183243')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyMeritActivityLogs (20170613183244)
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE `socify_merit_activity_logs` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `action_id` int, `related_change_type` varchar(255), `related_change_id` int, `description` varchar(255), `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183244')[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifySashes (20170613183245)
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE `socify_sashes` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183245')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyBadgesSashes (20170613183246)
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE `socify_badges_sashes` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `badge_id` int, `sash_id` int, `notified_user` tinyint(1) DEFAULT 0, `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (14.0ms)[0m  [1m[35mCREATE  INDEX `index_socify_badges_sashes_on_badge_id_and_sash_id`  ON `socify_badges_sashes` (`badge_id`, `sash_id`) [0m
+  [1m[35m (31.1ms)[0m  [1m[35mCREATE  INDEX `index_socify_badges_sashes_on_badge_id`  ON `socify_badges_sashes` (`badge_id`) [0m
+  [1m[35m (28.8ms)[0m  [1m[35mCREATE  INDEX `index_socify_badges_sashes_on_sash_id`  ON `socify_badges_sashes` (`sash_id`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183246')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSocifyScoresAndPoints (20170613183247)
+  [1m[35m (18.7ms)[0m  [1m[35mCREATE TABLE `socify_merit_scores` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `sash_id` bigint, `category` varchar(255) DEFAULT 'default',  INDEX `index_socify_merit_scores_on_sash_id`  (`sash_id`)) ENGINE=InnoDB[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE `socify_merit_score_points` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `score_id` bigint, `num_points` int DEFAULT 0, `log` varchar(255), `created_at` datetime,  INDEX `index_socify_merit_score_points_on_score_id`  (`score_id`)) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170613183247')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2017-07-27 20:01:58', '2017-07-27 20:01:58')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT RELEASE_LOCK(6513307308800014170)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW CREATE TABLE `socify_activities`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_activities'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_badges_sashes`[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_comments`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_comments'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_events`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_events'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_follows`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_follows'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_friendly_id_slugs`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_friendly_id_slugs'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_merit_actions`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_merit_actions'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_merit_activity_logs`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_merit_activity_logs'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_merit_score_points`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_merit_score_points'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_merit_scores`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_merit_scores'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW CREATE TABLE `socify_posts`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_posts'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_sashes`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSHOW CREATE TABLE `socify_users`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_users'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSHOW CREATE TABLE `socify_votes`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSHOW TABLE STATUS LIKE 'socify_votes'[0m
+Started GET "/" for ::1 at 2017-07-27 16:02:17 -0400
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/jradice/.rvm/gems/ruby-2.3.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/jradice/.rvm/gems/ruby-2.3.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb (3.7ms)
+Completed 200 OK in 10ms (Views: 7.5ms)
+
+
+Started GET "/" for ::1 at 2017-07-27 16:03:08 -0400
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/jradice/.rvm/gems/ruby-2.3.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/jradice/.rvm/gems/ruby-2.3.1/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb (2.9ms)
+Completed 200 OK in 6ms (Views: 4.4ms)
+
+
+Started GET "/welcome" for ::1 at 2017-07-27 16:03:27 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/welcome"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+rack (2.0.3) lib/rack/handler/webrick.rb:86:in `service'
+/Users/jradice/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+/Users/jradice/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+/Users/jradice/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'

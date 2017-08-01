@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-lg-3">
+    <%= render 'socify/shared/user_info' %>
+  </div>
+  <div class="col-lg-6 well">
+    <h3>Find Friends</h3>
+    <hr>
+    <div id="users">
+      <%= render(@users) || render('socify/shared/no_resource', resources: 'Users') %>
+    </div>
+    <%= render 'socify/shared/paginate', resources: @users %>
+  </div>
+  <div class="col-lg-3">
+    <%= render 'socify/shared/links' %>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-lg-3">
+    <%= render 'socify/shared/user_info' %>
+  </div>
+  <div id="newsfeed" class="col-lg-6">
+    <%= render 'socify/posts/form' %>
+    <br>
+    <div id="activities">
+      <% if @activities.empty? %>
+        <div class="well">
+          <%= render('socify/shared/no_resource', resources: 'Activities') %>
+        </div>
+      <% else %>
+        <%= render_activities(@activities, layout: '/socify/shared/activity') %>
+      <% end %>
+    </div>
+    <%= render 'socify/shared/paginate', resources: @activities %>
+  </div>
+  <div class="col-lg-3">
+    <%= render 'socify/shared/links' %>
+  </div>
+</div>

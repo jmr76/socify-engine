@@ -1,0 +1,3 @@
+$('#activities').append("<%= j render_activities(@activities, layout: '/socify/shared/activity') %>");
+
+<%= render 'socify/shared/paginate', resources: @activities %>
