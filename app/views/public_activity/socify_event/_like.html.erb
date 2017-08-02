@@ -5,7 +5,7 @@
         <div class="info">
           <%= render 'socify/shared/avatar', user: activity.owner %>
           <h4 class="name"><%= link_to activity.owner.name, socify.user_path(activity.owner) %></h4>
-          <span class="action">liked a <%= link_to 'event', activity.trackable %></span>
+          <span class="action">liked an <%= link_to 'event', activity.trackable %></span>
         </div>
         <div class="content">
           <h4><small><%= activity.trackable.name %></small></h4>

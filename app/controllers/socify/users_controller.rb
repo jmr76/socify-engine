@@ -8,7 +8,7 @@ module Socify
   class UsersController < ApplicationController
     before_action :authenticate_user!
     before_action :set_user
-    before_action :check_ownership, only: [:edit, :update]
+    before_action :check_ownership, only: [:edit, :update, :destroy]
     respond_to :html, :js
 
     def show
@@ -27,6 +27,12 @@ module Socify
     end
 
     def deactivate
+    end
+
+    def destroy
+      if @user.destroy
+        redirect_to socify.root_path
+      end
     end
 
     def friends

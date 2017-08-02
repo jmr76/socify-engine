@@ -11,7 +11,7 @@
           <%= render('socify/shared/no_resource', resources: 'Activities') %>
         </div>
       <% else %>
-        <%= render_activities(@activities, layout: '/socify//shared/activity') %>
+        <%= render_activities(@activities, layout: '/socify/shared/activity') %>
       <% end %>
     </div>
     <%= render 'socify/shared/paginate', resources: @activities %>

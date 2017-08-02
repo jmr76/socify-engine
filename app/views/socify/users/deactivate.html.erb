@@ -5,7 +5,7 @@
       <hr>
       <h5>Unhappy with Socify? Hit the Button below to cancel account.</h5>
       <br>
-      <%= button_to 'Cancel my account', socify.registration_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %>
+      <%= button_to 'Cancel my account', socify.user_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %>
     </div>
   </div>
 </div>
