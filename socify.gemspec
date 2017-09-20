@@ -20,7 +20,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'sass-rails', '~> 5.0.0'
 
-  s.add_dependency 'devise'
+  s.add_dependency 'devise'  
+  s.add_dependency 'omniauth'
+  s.add_dependency 'omniauth-google-oauth2'
 
   s.add_dependency 'carrierwave'
   s.add_dependency 'friendly_id', '~> 5.0'
@@ -42,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-sass', '~> 3.2.0'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'merit'
-  
+
   s.add_development_dependency "mysql2"
   
 end
