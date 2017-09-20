@@ -3,7 +3,7 @@ Socify::Engine.routes.draw do
   resources :posts
   resources :comments, only: [:create, :destroy]
 
-  devise_for :users, class_name: "Socify::User", module: :devise, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, class_name: "Socify::User", module: :devise, controllers: { omniauth_callbacks: 'socify/users/omniauth_callbacks' }
   
   resources :users do
     member do
