@@ -13,6 +13,7 @@ Socify::Engine.routes.draw do
       get :mentionable
     end
   end
+  
 
   resources :events do
     collection do

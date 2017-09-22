@@ -240,13 +240,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   require 'omniauth-google-oauth2'
-  config.omniauth :google_Oauth2, Rails.application.secrets.google.client_id, Rails.application.secrets.google.client_secret
-
-  # require 'omniauth-twitter'
-  # config.omniauth :twitter, ENV["TWITTER_KEY"], ENV["TWITTER_SECRET"]
-
-  # require 'omniauth-facebook'
-  # config.omniauth :facebook, ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"]
+  config.omniauth :google_oauth2, ENV['GOOGLE_APP_ID'], ENV['GOOGLE_APP_SECRET']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -270,15 +264,10 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  # config.omniauth_path_prefix = '/users/auth'
 
   Rails.application.config.after_initialize do
     ::OmniAuth::config.path_prefix = config.omniauth_path_prefix = "/users/auth"
   end
-
-  # Rails.application.config.middleware.use OmniAuth::Builder do
-  #   provider OmniAuth::Strategies::GoogleOauth2,'369853654313-kdr9ijq3pls11ckjemv7v0j75m1okk1p.apps.googleusercontent.com', '9Vf_xZxAaFOpYRdVxvbMIRz4'
-  # end
 
   config.parent_controller = "Socify::ApplicationController"
 end
