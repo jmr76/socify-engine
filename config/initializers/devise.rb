@@ -240,7 +240,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   require 'omniauth-google-oauth2'
-  config.omniauth :google_Oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"]
+  config.omniauth :google_Oauth2, Rails.application.secrets.google.client_id, Rails.application.secrets.google.client_secret
 
   # require 'omniauth-twitter'
   # config.omniauth :twitter, ENV["TWITTER_KEY"], ENV["TWITTER_SECRET"]
