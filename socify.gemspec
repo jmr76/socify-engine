@@ -48,5 +48,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'merit'
 
   s.add_development_dependency "mysql2"
-  
+  s.add_development_dependency "dotenv"  
 end

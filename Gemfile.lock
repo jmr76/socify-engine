@@ -94,6 +94,7 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
+    dotenv (2.2.1)
     erubi (1.6.1)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
@@ -232,6 +233,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   mysql2
   socify!
 
