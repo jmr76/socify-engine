@@ -242,11 +242,11 @@ Devise.setup do |config|
   require 'omniauth-google-oauth2'
   config.omniauth :google_Oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"]
 
-  require 'omniauth-twitter'
-  config.omniauth :twitter, ENV["TWITTER_KEY"], ENV["TWITTER_SECRET"]
+  # require 'omniauth-twitter'
+  # config.omniauth :twitter, ENV["TWITTER_KEY"], ENV["TWITTER_SECRET"]
 
-  require 'omniauth-facebook'
-  config.omniauth :facebook, ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"]
+  # require 'omniauth-facebook'
+  # config.omniauth :facebook, ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
