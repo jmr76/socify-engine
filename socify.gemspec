@@ -19,7 +19,9 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.1.2"
 
   s.add_dependency 'sass-rails', '~> 5.0.0'
-
+  
+  s.add_development_dependency "dotenv-rails"
+    
   s.add_dependency 'devise'
   s.add_dependency 'omniauth'
   s.add_dependency 'omniauth-google-oauth2'
@@ -46,5 +48,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'merit'
 
   s.add_development_dependency "mysql2"
-  s.add_development_dependency "dotenv"  
 end
