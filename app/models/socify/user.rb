@@ -12,9 +12,9 @@ module Socify
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable, 
        :recoverable, :rememberable, :trackable, :validatable,
-       :omniauthable, omniauth_providers: [:google_oauth2]
+       :omniauthable, omniauth_providers: [:google_oauth2, :facebook, :twitter]
        
-    # :confirmable, omniauth_providers: [:google_oauth2, :facebook, :twitter]
+    # :confirmable
        
     acts_as_voter
     acts_as_follower

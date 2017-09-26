@@ -242,6 +242,12 @@ Devise.setup do |config|
   require 'omniauth-google-oauth2'
   config.omniauth :google_oauth2, Rails.application.secrets.google_key, Rails.application.secrets.google_secret
 
+  require 'omniauth-facebook'
+  config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret
+
+  require 'omniauth-twitter'
+  config.omniauth :twitter, Rails.application.secrets.twitter_key, Rails.application.secrets.twitter_secret
+  
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
