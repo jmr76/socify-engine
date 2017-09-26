@@ -23,8 +23,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise'  
   s.add_dependency 'omniauth'
   s.add_dependency 'omniauth-google-oauth2'
-  s.add_dependency 'omniauth-twitter'
-  s.add_dependency 'omniauth-facebook'
+  # s.add_dependency 'omniauth-twitter'
+  # s.add_dependency 'omniauth-facebook'
 
   s.add_dependency 'carrierwave'
   s.add_dependency 'friendly_id', '~> 5.0'
