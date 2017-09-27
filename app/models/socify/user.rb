@@ -56,9 +56,8 @@ module Socify
         # Get the existing user by email if the provider gives us a verified email.
         # If no verified email was provided we assign a temporary email and ask the
         # user to verify it on the next step via UsersController.finish_signup
-        # email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
-        email = auth.info.email 
-        # if email_is_verified
+        email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
+        email = auth.info.email if email_is_verified
         user = Socify::User.where(:email => email).first if email
   
         # Create the user if it's a new registration
