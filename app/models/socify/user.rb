@@ -57,11 +57,11 @@ module Socify
         # user to verify it on the next step via UsersController.finish_signup
         email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
         email = auth.info.email if email_is_verified
-        user = User.where(:email => email).first if email
+        user = Socify::User.where(:email => email).first if email
   
         # Create the user if it's a new registration
         if user.nil?
-          user = User.new(
+          user = Socify::User.new(
             name: auth.extra.raw_info.name,
             #username: auth.info.nickname || auth.uid,
             email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
