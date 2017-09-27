@@ -22,6 +22,7 @@ module Socify
     has_many :posts
     has_many :comments
     has_many :events
+    has_many :identities
 
     mount_uploader :avatar, AvatarUploader
     mount_uploader :cover, AvatarUploader
