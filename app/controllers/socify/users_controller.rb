@@ -65,7 +65,7 @@ module Socify
     private
 
     def user_params
-      params.require(:user).permit(:name, :about, :avatar, :cover,
+      params.require(:user).permit(:name, :about, :avatar, :cover, :email,
                                    :sex, :dob, :location, :phone_number)
     end
 
