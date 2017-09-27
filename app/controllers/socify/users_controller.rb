@@ -35,6 +35,19 @@ module Socify
       end
     end
 
+    def finish_signup
+      # authorize! :update, @user 
+      if request.patch? && params[:user] #&& params[:user][:email]
+        if @user.update(user_params)
+          @user.skip_reconfirmation!
+          sign_in(@user, :bypass => true)
+          redirect_to @user, notice: 'Your profile was successfully updated.'
+        else
+          @show_errors = true
+        end
+      end
+    end
+
     def friends
       #@friends = @user.following_users.paginate(page: params[:page])
       @friends = @user.following_by_type("Socify::User").paginate(page: params[:page])
