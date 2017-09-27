@@ -62,7 +62,7 @@ module Socify
         # Create the user if it's a new registration
         if user.nil?
           user = Socify::User.new(
-            name: auth.extra.raw_info.name,
+            name: auth.name,
             #username: auth.info.nickname || auth.uid,
             email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
             password: Devise.friendly_token[0,20]
