@@ -8,6 +8,7 @@ module Socify
   class User < ApplicationRecord
     # Include default devise modules. Others available are:
     has_merit
+    attr_accessor :login
 
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable, 
@@ -19,6 +20,7 @@ module Socify
     acts_as_follower
     acts_as_followable
 
+
     has_many :posts
     has_many :comments
     has_many :events
@@ -27,6 +29,13 @@ module Socify
     mount_uploader :cover, AvatarUploader
 
     validates_presence_of :name
+
+    validates :username, :presence => true,
+    :uniqueness => {
+      :case_sensitive => false
+    }
+
+    validate :validate_username
 
     self.per_page = 10
 
