@@ -14,8 +14,8 @@ module Socify
 
     protected
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :password_confirmation])
-      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :remember_me])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :password_confirmation])
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :username, :remember_me])
     end
 
     def render_404

@@ -36,11 +36,14 @@ module Socify
     end
 
     def finish_signup
-      # authorize! :update, @user 
-      if request.patch? && params[:user] #&& params[:user][:email]
+      if request.patch? && params[:user]
         if @user.update(user_params)
           sign_in(@user, :bypass => true)
-          redirect_to @user, notice: 'Your profile was successfully updated.'
+          if @user.created_at == @user.last_sign_in_at && @user.created_at == @user.current_sign_in_at && @user.last_sign_in_at == @user.current_sign_in_at
+            main_app.welcome_feed_path
+          else
+            redirect_to @user, notice: 'Your profile was successfully updated.'
+          end
         else
           @show_errors = true
         end
@@ -65,7 +68,7 @@ module Socify
     private
 
     def user_params
-      params.require(:user).permit(:name, :about, :avatar, :cover, :email,
+      params.require(:user).permit(:name, :username, :about, :avatar, :cover, :email,
                                    :sex, :dob, :location, :phone_number)
     end
 
