@@ -35,8 +35,6 @@ module Socify
       :case_sensitive => false
     }
 
-    validate :validate_username
-
     self.per_page = 10
 
     extend FriendlyId
