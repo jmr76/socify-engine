@@ -35,6 +35,21 @@ module Socify
       end
     end
 
+    def finish_signup
+      if request.patch? && params[:user]
+        if @user.update(user_params)
+          sign_in(@user, :bypass => true)
+          if @user.created_at == @user.last_sign_in_at && @user.created_at == @user.current_sign_in_at && @user.last_sign_in_at == @user.current_sign_in_at
+            main_app.welcome_feed_path
+          else
+            redirect_to @user, notice: 'Your profile was successfully updated.'
+          end
+        else
+          @show_errors = true
+        end
+      end
+    end
+
     def friends
       #@friends = @user.following_users.paginate(page: params[:page])
       @friends = @user.following_by_type("Socify::User").paginate(page: params[:page])
@@ -53,7 +68,7 @@ module Socify
     private
 
     def user_params
-      params.require(:user).permit(:name, :about, :avatar, :cover,
+      params.require(:user).permit(:name, :about, :avatar, :cover, :email,
                                    :sex, :dob, :location, :phone_number)
     end
 
