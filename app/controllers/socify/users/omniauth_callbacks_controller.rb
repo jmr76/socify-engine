@@ -22,7 +22,7 @@ class Socify::Users::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
   def after_sign_in_path_for(resource)
     if resource.email_verified?
       if @user.created_at == @user.last_sign_in_at && @user.created_at == @user.current_sign_in_at && @user.last_sign_in_at == @user.current_sign_in_at
-        welcome_feed_path()
+        main_app.welcome_feed_path
       else
         super resource
       end
