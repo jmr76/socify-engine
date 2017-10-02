@@ -12,7 +12,7 @@ module Socify
 
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable, 
-       :recoverable, :rememberable, :trackable, :validatable
+       :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :authentication_keys => [:login]
        
     # :confirmable,
        
