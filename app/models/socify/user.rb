@@ -8,16 +8,18 @@ module Socify
   class User < ApplicationRecord
     # Include default devise modules. Others available are:
     has_merit
+    attr_accessor :login
 
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable, 
-       :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+       :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :authentication_keys => [:login]
        
     # :confirmable
        
     acts_as_voter
     acts_as_follower
     acts_as_followable
+
 
     has_many :posts
     has_many :comments
@@ -28,6 +30,11 @@ module Socify
     mount_uploader :cover, AvatarUploader
 
     validates_presence_of :name
+
+    validates :username, :presence => true,
+    :uniqueness => {
+      :case_sensitive => false
+    }
 
     self.per_page = 10
 
@@ -87,6 +94,15 @@ module Socify
   
     def email_verified?
       self.email && self.email !~ TEMP_EMAIL_REGEX
+    end
+
+    def self.find_for_database_authentication(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+        where(conditions.to_h).first
+      end
     end
   end
 end
