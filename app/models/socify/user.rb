@@ -61,19 +61,19 @@ module Socify
         # If no verified email was provided we assign a temporary email and ask the
         # user to verify it on the next step via UsersController.finish_signup
         # if auth.provider == 'google_oauth2'
-        email = auth.info.email
+        email = auth.info.email || "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
         # else
         #   email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
         #   email = auth.info.email if email_is_verified
         # end
         user = Socify::User.where(:email => email).first if email
-  
+
         # Create the user if it's a new registration
         if user.nil?
           user = Socify::User.new(
             name: auth.info.name,
-            #username: auth.info.nickname || auth.uid,
-            email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+            username: auth.info.nickname || email,
+            email: email,
             password: Devise.friendly_token[0,20]
           )
           # user.skip_confirmation!
