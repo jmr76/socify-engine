@@ -11,11 +11,8 @@ module Socify
     attr_accessor :login
 
     # :confirmable, :lockable, :timeoutable and :omniauthable
-    devise :database_authenticatable, :registerable, 
-       :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :authentication_keys => [:login]
-       
-    # :confirmable
-       
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+
     acts_as_voter
     acts_as_follower
     acts_as_followable
@@ -47,7 +44,7 @@ module Socify
     validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
   
     def self.find_for_oauth(auth, signed_in_resource = nil)
-  
+
       # Get the identity and user if they exist
       identity = Identity.find_for_oauth(auth)
   
