@@ -11,7 +11,13 @@ module Socify
     protect_from_forgery with: :exception
 
     before_action :configure_permitted_parameters, if: :devise_controller?
-    
+
+    def create
+      @user = User.find_or_create_from_auth_hash(auth_hash)
+      self.current_user = @user
+      redirect_to '/'
+    end
+
     protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :username, :password_confirmation])
@@ -23,15 +29,7 @@ module Socify
         format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
       end
     end
-
-    def create
-      @user = User.find_or_create_from_auth_hash(auth_hash)
-      self.current_user = @user
-      redirect_to '/'
-    end
-
-    protected
-
+    
     def auth_hash
       request.env['omniauth.auth']
     end
