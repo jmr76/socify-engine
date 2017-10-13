@@ -56,7 +56,6 @@ module Socify
   
       # Create the user if needed
       if user.nil?
-  
         # Get the existing user by email if the provider gives us a verified email.
         # If no verified email was provided we assign a temporary email and ask the
         # user to verify it on the next step via UsersController.finish_signup
@@ -80,6 +79,12 @@ module Socify
           user.save!
         end
       end
+
+      user.update(
+        token: auth.credentials.token,
+        secret: auth.credentials.secret
+      )
+      user.save!
   
       # Associate the identity with the user if needed
       if identity.user != user
