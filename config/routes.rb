@@ -38,5 +38,6 @@ Socify::Engine.routes.draw do
   match :find_friends, to: 'home#find_friends', as: :find_friends, via: :get
   match :about, to: 'home#about', as: :about, via: :get
 
+  get 'auth/:provider/callback', to: 'application#create', as: :provider_callback
 end
 
