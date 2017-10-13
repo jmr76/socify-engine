@@ -15,9 +15,9 @@ class Socify::Users::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
     }
   end
 
-  # [:twitter, :facebook, :google_oauth2].each do |provider|
-  #   provides_callback_for provider
-  # end
+  [:twitter, :facebook, :google_oauth2].each do |provider|
+    provides_callback_for provider
+  end
 
   def after_sign_in_path_for(resource)
     if resource.email_verified?
