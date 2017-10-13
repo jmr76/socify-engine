@@ -74,11 +74,19 @@ module Socify
             name: auth.info.name,
             username: auth.info.nickname || email,
             email: email,
-            password: Devise.friendly_token[0,20]
+            password: Devise.friendly_token[0,20],
+            token: auth.credentials.token,
+            secret: auth.credentials.secret
           )
           # user.skip_confirmation!
           user.save!
         end
+      else
+        user.update(
+          token: auth.credentials.token,
+          secret: auth.credentials.secret
+        )
+        user.save!
       end
   
       # Associate the identity with the user if needed
