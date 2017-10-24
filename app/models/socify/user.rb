@@ -64,7 +64,11 @@ module Socify
           email = auth.info.email
         else
           email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
-          email = auth.info.email if email_is_verified
+          if email_is_verified
+            email = auth.info.email
+          else 
+            email = "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
+          end
         end
 
         user = Socify::User.where(:email => email).first if email
@@ -74,7 +78,7 @@ module Socify
           user = Socify::User.new(
             name: auth.info.name,
             username: auth.info.nickname || email,
-            email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+            email: email,
             password: Devise.friendly_token[0,20]
           )
           # user.skip_confirmation!
