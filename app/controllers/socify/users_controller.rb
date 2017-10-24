@@ -39,11 +39,7 @@ module Socify
       if request.patch? && params[:user]
         if @user.update(user_params)
           sign_in(@user, :bypass => true)
-          if @user.created_at == @user.last_sign_in_at && @user.created_at == @user.current_sign_in_at && @user.last_sign_in_at == @user.current_sign_in_at
-            main_app.welcome_feed_path
-          else
-            redirect_to @user, notice: 'Your profile was successfully updated.'
-          end
+          redirect_to main_app.welcome_feed_path
         else
           @show_errors = true
         end
