@@ -51,8 +51,12 @@ module Socify
       user = signed_in_resource ? signed_in_resource : identity.user
   
       if user.nil?
-        email = auth.info.email || "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
-        
+        if auth.info.email.blank?
+          email = "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
+        else
+          email = auth.info.email
+        end
+
         user = Socify::User.where(:email => email).first if email
         if user.nil?
           user = Socify::User.new(
