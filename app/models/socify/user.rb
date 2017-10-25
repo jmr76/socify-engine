@@ -51,17 +51,8 @@ module Socify
       user = signed_in_resource ? signed_in_resource : identity.user
   
       if user.nil?
-        if auth.provider == 'google_oauth2'
-          email = auth.info.email
-        else
-          email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
-          if email_is_verified
-            email = auth.info.email
-          else 
-            email = "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
-          end
-        end
-
+        email = auth.info.email || "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
+        
         user = Socify::User.where(:email => email).first if email
         if user.nil?
           user = Socify::User.new(
