@@ -8,7 +8,7 @@ module Socify
   class AvatarUploader < CarrierWave::Uploader::Base
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
-    # include CarrierWave::MiniMagick
+    include CarrierWave::MiniMagick
 
     storage :fog if Rails.env.production?
 
