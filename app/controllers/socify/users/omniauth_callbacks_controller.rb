@@ -15,7 +15,7 @@ class Socify::Users::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
     }
   end
 
-  [:twitter, :facebook, :google_oauth2].each do |provider|
+  [:twitter, :google_oauth2, :facebook].each do |provider|
     provides_callback_for provider
   end
 

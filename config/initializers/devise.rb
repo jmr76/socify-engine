@@ -79,7 +79,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [:http_auth, :facebook_token_authenticatable]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -276,4 +276,9 @@ Devise.setup do |config|
   end
 
   config.parent_controller = "Socify::ApplicationController"
+
+  # config.warden do |manager|
+  #   manager.strategies.add(:facebook_token_authenticable, Devise::Strategies::FacebookTokenAuthenticable) 
+  #   manager.default_strategies(:scope => :user).unshift :facebook_token_authenticable 
+  # end
 end

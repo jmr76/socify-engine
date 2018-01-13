@@ -11,7 +11,7 @@ module Socify
     attr_accessor :login
 
     # :confirmable, :lockable, :timeoutable and :omniauthable
-    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :facebook_token_authenticatable
 
     acts_as_voter
     acts_as_follower
@@ -44,6 +44,7 @@ module Socify
     validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
   
     def self.find_for_oauth(auth, signed_in_resource = nil)
+      # byebug
       identity = Identity.find_for_oauth(auth)
   
       # If a signed_in_resource is provided it always overrides the existing user
@@ -51,27 +52,27 @@ module Socify
       user = signed_in_resource ? signed_in_resource : identity.user
   
       if user.nil?
-        if auth.info.email.blank?
-          email = "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com"
+        if auth[:info][:email].blank?
+          email = "#{TEMP_EMAIL_PREFIX}-#{auth[:uid]}-#{auth[:provider]}.com"
         else
-          email = auth.info.email
+          email = auth[:info][:email]
         end
 
         user = Socify::User.where(:email => email).first if email
         if user.nil?
           user = Socify::User.new(
-            name: auth.info.name,
-            username: auth.info.nickname || email,
+            name: auth[:info][:name],
+            username: auth[:info][:nickname] || email,
             email: email,
             password: Devise.friendly_token[0,20]
           )
           # user.skip_confirmation!
-          user.save!
+          user.save
         end
       end
   
       # Associate the identity with the user if needed
-      if identity.user != user
+      if user.valid? && identity.user != user
         identity.user = user
         identity.save!
       end
@@ -90,5 +91,10 @@ module Socify
         where(conditions.to_h).first
       end
     end
+
+    def self.find_or_initialize_by_facebook_token
+    end
+    
+    #<OmniAuth::AuthHash credentials=#<OmniAuth::AuthHash expires=true expires_at=1520620741 token="EAAEmxZBmDWJ4BAEbxT9QMo5kbPi56KTsDBZBZCyRItTUxfZCmwenzwmgpXdnG0PEQDwomHxz1HlVetRbuwGOJcmwMkvaIZBm7ktZAkfVIGMctKW1S4T1XfWoU0P2RU8HZBpjoV0Mxg0f7RNODS5e9wTBBTEhM87svMZD"> extra=#<OmniAuth::AuthHash raw_info=#<OmniAuth::AuthHash email="jayrad1976@gmail.com" id="10156098742013060" name="Jason Radice">> info=#<OmniAuth::AuthHash::InfoHash email="jayrad1976@gmail.com" image="http://graph.facebook.com/v2.6/10156098742013060/picture" name="Jason Radice"> provider="facebook" uid="10156098742013060">
   end
 end
