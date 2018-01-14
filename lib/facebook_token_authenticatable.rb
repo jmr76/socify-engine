@@ -5,15 +5,9 @@ module FacebookTokenAuthenticatable
     end
 
     def valid?
-      # must call this to actually get the authentication_hash set:
-      # valid_for_http_auth?
-
       # but, we want this strategy to be valid for any request with this header set so that we can use a custom
       # response for an invalid request.
-      puts "CUSTOM VALID??????"
-      valid = request.headers['X-HC-FB-AUTH'].present?
-      puts "FB Auth header? #{valid}"
-      valid
+      request.headers['X-HC-FB-AUTH'].present?
     end
 
     # it must have an authenticate! method to perform the validation
