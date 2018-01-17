@@ -11,7 +11,7 @@ module Socify
 
       if auth[:credentials] && auth[:credentials][:token]
         identity.token = auth[:credentials][:token]
-        identity.expires_at = Time.at(auth[:credentials][:expires_at].to_i).to_datetime if auth[:credentials][:expires]
+        identity.expires_at = Time.at(auth[:credentials][:expires_at].to_i).to_datetime if (auth[:credentials][:expires] != "false" && !auth[:credentials][:expires_at].blank?)
         identity.save
       end
 
