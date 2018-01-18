@@ -17,8 +17,6 @@ module Socify
     include PublicActivity::Model
     tracked only: [:create, :like], owner: proc { |_controller, model| model.user }
 
-    default_scope -> { order('created_at DESC') }
-
     mount_uploader :attachment, Socify::AvatarUploader
 
     validates_presence_of :content
