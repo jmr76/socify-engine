@@ -8,13 +8,14 @@ module Socify
   class AvatarUploader < CarrierWave::Uploader::Base
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
-    # include CarrierWave::MiniMagick
+    include CarrierWave::MiniMagick
+    include CarrierWave::Processing::MiniMagick
 
     storage :fog if Rails.env.production?
 
     # Choose what kind of storage to use for this uploader:
     storage :file if Rails.env.development?
-    # storage :fog
+    storage :fog if Rails.env.production?
 
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:
@@ -31,11 +32,13 @@ module Socify
     # end
 
     # Process files as they are uploaded:
-    # process :scale => [200, 300]
-    #
-    # def scale(width, height)
-    #   # do something
-    # end
+    process :thumb => [332.5]
+
+    def thumb(width)
+      manipulate! do |img|
+        img.thumbnail(width)
+      end
+    end
 
     # Create different versions of your uploaded files:
     # version :thumb do
@@ -44,9 +47,9 @@ module Socify
 
     # Add a white list of extensions which are allowed to be uploaded.
     # For images you might use something like this:
-    # def extension_white_list
-    #   %w(jpg jpeg gif png)
-    # end
+    def extension_white_list
+      %w(jpg jpeg gif png)
+    end
 
     # Override the filename of the uploaded files:
     # Avoid using model.id or version_name here, see uploader/store.rb for details.
