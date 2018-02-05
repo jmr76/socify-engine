@@ -277,6 +277,9 @@ Devise.setup do |config|
 
   config.parent_controller = "Socify::ApplicationController"
 
+  config.warden do |manager|
+    manager.default_strategies(scope: :user).unshift :guest_user
+  end
   # config.warden do |manager|
   #   manager.strategies.add(:facebook_token_authenticable, Devise::Strategies::FacebookTokenAuthenticable) 
   #   manager.default_strategies(:scope => :user).unshift :facebook_token_authenticable 
