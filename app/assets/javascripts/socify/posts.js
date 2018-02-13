@@ -6,10 +6,10 @@ $(document).ready(function () {
     $("#endless-scroll").removeClass("hidden");
     $(window).bindWithDelay("scroll", function () {
       var url = $("a.next_page").attr("href");
-      if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 50) {
+      if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
         $.getScript(url);
       }
-    }, 150);
+    }, 500);
   }
 
   $('#post-content').html($('#post_content').val());
