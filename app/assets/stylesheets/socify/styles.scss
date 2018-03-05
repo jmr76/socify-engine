@@ -28,10 +28,9 @@ h6 {
 .navbar-brand,
 .navbar-default .navbar-nav > li > a {
   font-family: 'Montserrat';
-  color: white !important;
 
   &:hover {
-    color: $bg-color !important;
+    color: $light-text-color !important;
   };
 }
 
