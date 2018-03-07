@@ -36,10 +36,11 @@ module Socify
     end
 
     def finish_signup
+      puts "HELLO LINDSAY"
       if request.patch? && params[:user]
         if @user.update(user_params)
           sign_in(@user, :bypass => true)
-          redirect_to main_app.install_extension_path
+          redirect_to main_app.root_path
         else
           @show_errors = true
         end
