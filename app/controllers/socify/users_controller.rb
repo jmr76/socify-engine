@@ -36,7 +36,6 @@ module Socify
     end
 
     def finish_signup
-      puts "HELLO LINDSAY"
       if request.patch? && params[:user]
         if @user.update(user_params)
           sign_in(@user, :bypass => true)
